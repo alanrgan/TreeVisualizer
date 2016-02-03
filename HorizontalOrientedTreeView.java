@@ -88,8 +88,7 @@ public class HorizontalOrientedTreeView extends TreeView
      
  }
  
- public static int getTreeHeight(Tree<String> tree)
- {
+ public static int getTreeHeight(Tree<String> tree) {
 	 return tree.getHeight(tree, 0, Integer.MIN_VALUE);
  }
 
@@ -114,10 +113,8 @@ public class HorizontalOrientedTreeView extends TreeView
   * @return      the tree parsed from the user-selected text file<br>
   * 		     {@code null} if the selected file does not exist or if the user cancels file selection
   */
- public static Tree<String> loadTree()
- {
-	 if(loadTreeFile())
-	 {
+ public static Tree<String> loadTree() {
+	 if(loadTreeFile()) {
 		 Scanner reader = null;
 		 try {
 			 reader = new Scanner(treeFile);
@@ -127,23 +124,19 @@ public class HorizontalOrientedTreeView extends TreeView
 			 LinkedList<String> stringList = new LinkedList<String>();
 			 int level;
 			 
-			 while(reader.hasNextLine() && (line = reader.nextLine()) != null)
-			 {
+			 while(reader.hasNextLine() && (line = reader.nextLine()) != null) {
 				 level = getNumberOfTabs(line.toCharArray());
 				 parent = null;
-				 if(level == 0)
-				 {
+				 if(level == 0) {
 					 line = line.replaceAll("\t", "");
 					 tree.setData(line);
 				 }
-				 else 
-				 {
+				 else {
 					 int prevLevel = Integer.MAX_VALUE;
 					 int listSize = stringList.size();
 					 parent = stringList.getLast();
 					 
-					 while(prevLevel >= level)
-					 {	
+					 while(prevLevel >= level) {	
 						 parent = stringList.get(listSize - 1);
 						 prevLevel = getNumberOfTabs(parent.toCharArray());
 						 listSize--;
@@ -171,8 +164,7 @@ public class HorizontalOrientedTreeView extends TreeView
 	 return null;
  }
  
- private static boolean loadTreeFile()
- {
+ private static boolean loadTreeFile() {
 	 FileChooser fileChooser = new FileChooser();
 	 fileChooser.setTitle("Open Tree Resource");
 	 treeFile = fileChooser.showOpenDialog(stage);
@@ -181,8 +173,7 @@ public class HorizontalOrientedTreeView extends TreeView
 	 return false;
  }
  
- public static Tree<String> setupTree()
- {
+ public static Tree<String> setupTree() {
 	 Tree<String> tree = new Tree<String>("Root");
 	 tree.addNode("Hello").addNode("What's Up").addNode("Who").addNode("what").addNode("When").addNode("where").addNode("goodbye").addNode("for").addNode("now");
 	 tree.addNode("Hey there").addNode("wee").addNode("woo").addNode("wa").addNode("HereIam");
@@ -209,12 +200,10 @@ public class HorizontalOrientedTreeView extends TreeView
      List<Point2D> parentMidptCoords = new ArrayList<Point2D>();
      List<Point2D> childMidptCoords = new ArrayList<Point2D>();
      
-     while(!currNodes.isEmpty())
-     {
+     while(!currNodes.isEmpty()) {
     	 double initOffsetValue = offset(currNodes.size());
     	 double offset = 0;
-    	 for(Tree<String> t : currNodes)
-    	 {
+    	 for(Tree<String> t : currNodes) {
     		 String data = t.getData();	 
     		 
     		 gc.fillText(data, initOffsetValue + offset + RECT_WIDTH/3.4, initHeight +
@@ -222,8 +211,7 @@ public class HorizontalOrientedTreeView extends TreeView
     		 gc.strokeRect(initOffsetValue + offset,
     				       initHeight, RECT_WIDTH, RECT_HEIGHT);
     		 
-    		 if(t.hasChildren())
-    		 {
+    		 if(t.hasChildren()) {
     			 for(int i = 0; i < t.getChildNodes().size(); i++)
     				 parentMidptCoords.add(new Point2D(initOffsetValue + offset + RECT_WIDTH/2,
     					 						       initHeight + RECT_HEIGHT));
@@ -236,15 +224,13 @@ public class HorizontalOrientedTreeView extends TreeView
     	 double nextInitialOffset = offset(nextNodes.size());
     	 double nextOffset = RECT_WIDTH/2;
     	 
-    	 for(int i = 0; i < nextNodes.size(); i++)
-    	 {
+    	 for(int i = 0; i < nextNodes.size(); i++) {
     		 childMidptCoords.add(new Point2D(nextInitialOffset + nextOffset,
     				 						  initHeight + RECT_HEIGHT + verticalPadding));
     		 nextOffset += RECT_WIDTH + horizontalPadding;
     	 }
     	 
-    	 for(int j = 0; j < parentMidptCoords.size(); j++)
-    	 {
+    	 for(int j = 0; j < parentMidptCoords.size(); j++) {
     		 Point2D pt = parentMidptCoords.get(j);
     		 Point2D pt2 = childMidptCoords.get(j);
     		 gc.strokeLine(pt.getX(), pt.getY(), pt2.getX(), pt2.getY());
@@ -259,8 +245,7 @@ public class HorizontalOrientedTreeView extends TreeView
      }
  }
  
- public double offset(int levelWidth)
- {
+ public double offset(int levelWidth) {
 	 boolean isEven = levelWidth % 2 == 0;
 	 double evenOddOffset = isEven ? RECT_WIDTH/2 : 0;
 	 double offset = windowWidth/2 - levelWidth/2 * (RECT_WIDTH + horizontalPadding)
